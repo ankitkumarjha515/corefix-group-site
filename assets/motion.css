@@ -1,0 +1,137 @@
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-press: 140ms;
+  --t-hover: 180ms;
+  --t-reveal: 800ms;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #0099ff;
+  outline-offset: 3px;
+}
+
+a.rounded-full,
+button.rounded-full {
+  transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease, opacity var(--t-hover) ease, box-shadow var(--t-hover) ease;
+}
+
+a.rounded-full:active,
+button.rounded-full:active {
+  transform: scale(0.98);
+}
+
+/* Hero: one arrival, then the light keeps breathing. */
+.cf-rise {
+  animation: cf-rise 900ms var(--ease-expo) both;
+}
+
+.cf-rise-2 { animation-delay: 90ms; }
+.cf-rise-3 { animation-delay: 170ms; }
+.cf-rise-4 { animation-delay: 250ms; }
+.cf-rise-5 { animation-delay: 360ms; }
+
+@keyframes cf-rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+
+.cf-glow-core {
+  animation: cf-glow-core 14s var(--ease-out) infinite;
+}
+
+.cf-glow-side {
+  animation: cf-glow-side 11s ease-in-out infinite;
+}
+
+.cf-glow-side-b {
+  animation-duration: 13s;
+  animation-delay: -4s;
+}
+
+@keyframes cf-glow-core {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.92; }
+  50% { transform: translate(-48%, -54%) scale(1.06); opacity: 1; }
+}
+
+@keyframes cf-glow-side {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(12px, -16px, 0); }
+}
+
+/* Bento and supporting panels: hairline edge, lift, picture settle. */
+#services article,
+#approach .grid > div,
+#why .grid > div,
+#partners li {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+#services article:hover,
+#approach .grid > div:hover,
+#why .grid > div:hover,
+#partners li:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  translate: 0 -6px;
+}
+
+#services article .overflow-hidden img {
+  transition: transform 900ms var(--ease-expo);
+}
+
+#services article:hover .overflow-hidden img {
+  transform: scale(1.045);
+}
+
+#services article a .material-symbols-outlined,
+#contact a .material-symbols-outlined {
+  transition: transform var(--t-hover) var(--ease-out);
+}
+
+#services article a:hover .material-symbols-outlined {
+  transform: translateX(4px);
+}
+
+/* Scroll entrances. Content stays visible if this script never runs. */
+.js [data-reveal] > * {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.js [data-reveal].is-in > * {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--t-reveal) var(--ease-expo), transform var(--t-reveal) var(--ease-expo), border-color var(--t-hover) ease, background-color var(--t-hover) ease, translate 500ms var(--ease-out);
+}
+
+.js [data-reveal].is-in > *:nth-child(2) { transition-delay: 70ms, 70ms, 0s, 0s, 0s; }
+.js [data-reveal].is-in > *:nth-child(3) { transition-delay: 140ms, 140ms, 0s, 0s, 0s; }
+.js [data-reveal].is-in > *:nth-child(4) { transition-delay: 210ms, 210ms, 0s, 0s, 0s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cf-rise,
+  .cf-glow-core,
+  .cf-glow-side {
+    animation: none;
+  }
+
+  .js [data-reveal] > *,
+  .js [data-reveal].is-in > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  #services article:hover,
+  #approach .grid > div:hover,
+  #why .grid > div:hover,
+  #partners li:hover {
+    translate: none;
+  }
+
+  #services article:hover .overflow-hidden img {
+    transform: none;
+  }
+}
